@@ -1,14 +1,13 @@
-import './Todo.css';
 import {
+  Checkbox,
   ListItem,
   ListItemText,
-  Checkbox,
   ListItemSecondaryAction,
 } from '@material-ui/core';
 
 function Todo({ name, completed }) {
   return (
-    <ListItem class="todo">
+    <ListItem>
       <ListItemText>{name}</ListItemText>
       <ListItemSecondaryAction>
         <Checkbox checked={completed} />

@@ -1,19 +1,17 @@
 import './App.css';
-import { List } from '@material-ui/core';
-import Todo from './components/Todo';
+import TodosList from './components/TodosList';
+import { Typography } from '@material-ui/core';
 
 function App() {
   return (
     <div className="App">
-      <h1>Todos</h1>
-      <List>
-        {[
+      <Typography variant="h4">Todos</Typography>
+      <TodosList
+        todos={[
           { name: 'Do the thing', completed: false },
           { name: 'Win the points', completed: true },
-        ].map((item) => (
-          <Todo name={item.name} completed={item.completed} />
-        ))}
-      </List>
+        ]}
+      ></TodosList>
     </div>
   );
 }
