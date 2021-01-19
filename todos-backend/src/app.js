@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 const Todo = require('./db/Todo.js');
 const sequelize = require('./db/Database.js');
@@ -8,6 +9,7 @@ const port = 7000;
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/api/test', (req, res) => {
   res.send('Hello World!');
