@@ -32,6 +32,7 @@ function App() {
   const styles = useStyles();
   // Used to force an update
   const [filterSelectValue, setFilterSelectValue] = useState('all');
+  const [sortSelectValue, setSortSelectValue] = useState('newest-first');
   const [dataVersion, setDataVersion] = useState(0);
   const [newTodoDialogOpen, setNewTodoDialogOpen] = useState(false);
   const { data, loading, error } = useAxios({
@@ -48,6 +49,12 @@ function App() {
     } else {
       todos = data;
     }
+
+    if (sortSelectValue === 'newest-first') {
+      todos = todos.sort((first, second) => first.createdAt < second.createdAt);
+    } else if (sortSelectValue === 'oldest-first') {
+      todos = todos.sort((first, second) => first.createdAt > second.createdAt);
+    }
   }
 
   return (
@@ -63,20 +70,39 @@ function App() {
             <Typography variant="h4">Todos</Typography>
           </Grid>
           <Grid item>
-            <FormControl variant="outlined" className={styles.formControl}>
-              <InputLabel id="filterLabel">Filter</InputLabel>
-              <Select
-                labelId="filterLabel"
-                id="filterSelect"
-                value={filterSelectValue}
-                onChange={(e) => setFilterSelectValue(e.target.value)}
-                label="Filter"
-              >
-                <MenuItem value="all">All</MenuItem>
-                <MenuItem value="uncompleted">Uncompleted</MenuItem>
-                <MenuItem value="completed">Completed</MenuItem>
-              </Select>
-            </FormControl>
+            <Grid container direction="row">
+              <Grid item>
+                <FormControl variant="outlined" className={styles.formControl}>
+                  <InputLabel id="filterLabel">Filter</InputLabel>
+                  <Select
+                    labelId="filterLabel"
+                    id="filterSelect"
+                    value={filterSelectValue}
+                    onChange={(e) => setFilterSelectValue(e.target.value)}
+                    label="Filter"
+                  >
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="uncompleted">Uncompleted</MenuItem>
+                    <MenuItem value="completed">Completed</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item>
+                <FormControl variant="outlined" className={styles.formControl}>
+                  <InputLabel id="sortLabel">Sort order</InputLabel>
+                  <Select
+                    labelId="sortLabel"
+                    id="sortSelect"
+                    value={sortSelectValue}
+                    onChange={(e) => setSortSelectValue(e.target.value)}
+                    label="Sort order"
+                  >
+                    <MenuItem value="newest-first">Newest first</MenuItem>
+                    <MenuItem value="oldest-first">Oldest first</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item>
             <Paper>
@@ -89,7 +115,7 @@ function App() {
                   todos.map((todo, i) => (
                     <>
                       <Todo
-                        key={i}
+                        key={todo.id}
                         todo={todo}
                         refresh={() => setDataVersion(dataVersion + 1)}
                       />
