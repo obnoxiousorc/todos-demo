@@ -1,18 +1,40 @@
 import './App.css';
 import TodosList from './components/TodosList';
-import { Typography } from '@material-ui/core';
-import axios from 'axios';
+import { Button, Container, Grid, Typography } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import useAxios from './hooks/useAxios';
+import { Add } from '@material-ui/icons';
 
 function App() {
-  const [todos, setTodos] = useState([]);
   const { data, loading, error } = useAxios({ url: 'todos' });
 
   return (
     <div className="App">
-      <Typography variant="h4">Todos</Typography>
-      {!loading && data ? <TodosList todos={data}></TodosList> : null}
+      <Container>
+        <Grid
+          container
+          spacing={3}
+          style={{ height: '100%' }}
+          direction="column"
+        >
+          <Grid item>
+            <Typography variant="h4">Todos</Typography>
+          </Grid>
+          <Grid item>
+            {!loading && data ? <TodosList todos={data}></TodosList> : null}
+          </Grid>
+          <Grid item>
+            <Button
+              size="large"
+              variant="contained"
+              color="primary"
+              startIcon={<Add />}
+            >
+              Add todo
+            </Button>
+          </Grid>
+        </Grid>
+      </Container>
     </div>
   );
 }

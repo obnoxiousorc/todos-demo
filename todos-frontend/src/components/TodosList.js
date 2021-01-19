@@ -1,6 +1,5 @@
 import {
   List,
-  makeStyles,
   Paper,
   Divider,
   ListItem,
@@ -8,18 +7,9 @@ import {
 } from '@material-ui/core';
 import Todo from './Todo';
 
-const useStyles = makeStyles((theme) => ({
-  mainList: {
-    width: '50%',
-    margin: 'auto',
-  },
-}));
-
 function TodosList({ todos }) {
-  const styles = useStyles();
-
   return (
-    <Paper className={styles.mainList}>
+    <Paper>
       <List>
         {todos.length === 0 ? (
           <ListItem>
