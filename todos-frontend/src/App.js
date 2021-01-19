@@ -31,7 +31,7 @@ function App() {
         <Grid
           container
           spacing={3}
-          style={{ height: '100%' }}
+          style={{ maxHeight: '100vh' }}
           direction="column"
         >
           <Grid item>
@@ -39,7 +39,7 @@ function App() {
           </Grid>
           <Grid item>
             <Paper>
-              <List>
+              <List style={{ maxHeight: '60vh', overflow: 'auto' }}>
                 {!data || data.length === 0 ? (
                   <ListItem>
                     <ListItemText>No todos yet!</ListItemText>

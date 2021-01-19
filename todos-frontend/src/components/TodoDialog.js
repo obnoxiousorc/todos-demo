@@ -15,7 +15,10 @@ function TodoDialog({ open, onClose, todo }) {
   const [error, setError] = useState('');
   const [axiosProps, setAxiosProps] = useState({});
   const { loading, axiosError } = useAxios(axiosProps, {
-    successCb: () => onClose(),
+    successCb: () => {
+      setName('');
+      onClose();
+    },
     errorCb: (e) => setError(e.message),
     afterCb: () => setAxiosProps({}),
   });
@@ -37,7 +40,13 @@ function TodoDialog({ open, onClose, todo }) {
         />
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" onClick={onClose}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setName('');
+            onClose();
+          }}
+        >
           Cancel
         </Button>
         <Button
