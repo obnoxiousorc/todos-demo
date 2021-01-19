@@ -27,7 +27,19 @@ function Todo({ todo, refresh }) {
   return (
     <>
       <ListItem>
-        <ListItemText>{todo.name}</ListItemText>
+        <ListItemText
+          style={
+            todo.completed
+              ? {
+                  textDecoration: 'line-through',
+                  color: 'grey',
+                  fontStyle: 'italic',
+                }
+              : null
+          }
+        >
+          {todo.name}
+        </ListItemText>
         <ListItemSecondaryAction>
           <Checkbox
             checked={todo.completed}
