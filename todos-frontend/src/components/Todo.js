@@ -16,7 +16,7 @@ function Todo({ todo, refresh }) {
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [axiosProps, setAxiosProps] = useState({});
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const { loading, axiosError } = useAxios(axiosProps, {
+  const { loading } = useAxios(axiosProps, {
     afterCb: () => {
       setMenuAnchor(null);
       setAxiosProps({});

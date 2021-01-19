@@ -15,7 +15,7 @@ import {
   Select,
   Typography,
 } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useAxios from './hooks/useAxios';
 import { Add } from '@material-ui/icons';
 import TodoDialog from './components/TodoDialog';
@@ -35,7 +35,7 @@ function App() {
   const [sortSelectValue, setSortSelectValue] = useState('newest-first');
   const [dataVersion, setDataVersion] = useState(0);
   const [newTodoDialogOpen, setNewTodoDialogOpen] = useState(false);
-  const { data, loading, error } = useAxios({
+  const { data } = useAxios({
     url: 'todos',
     version: dataVersion,
   });
@@ -70,7 +70,7 @@ function App() {
             <Typography variant="h4">Todos</Typography>
           </Grid>
           <Grid item>
-            <Grid container direction="row">
+            <Grid container direction="row" justify="center">
               <Grid item>
                 <FormControl variant="outlined" className={styles.formControl}>
                   <InputLabel id="filterLabel">Filter</InputLabel>
@@ -106,7 +106,7 @@ function App() {
           </Grid>
           <Grid item>
             <Paper>
-              <List style={{ maxHeight: '60vh', overflow: 'auto' }}>
+              <List style={{ maxHeight: '70vh', overflow: 'auto' }}>
                 {!todos || todos.length === 0 ? (
                   <ListItem>
                     <ListItemText>No todos yet!</ListItemText>

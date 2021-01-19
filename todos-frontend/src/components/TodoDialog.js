@@ -14,7 +14,7 @@ function TodoDialog({ open, onClose, todo }) {
   const [name, setName] = useState(todo ? todo.name : '');
   const [error, setError] = useState('');
   const [axiosProps, setAxiosProps] = useState({});
-  const { loading, axiosError } = useAxios(axiosProps, {
+  const { loading } = useAxios(axiosProps, {
     successCb: () => {
       setName('');
       onClose();

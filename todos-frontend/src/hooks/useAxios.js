@@ -41,7 +41,7 @@ function useAxios(props, { successCb, errorCb, afterCb } = {}) {
         }
       });
     setLoading(true);
-  }, [props]);
+  }, [props, successCb, afterCb, errorCb]);
 
   return { data, loading, error };
 }
