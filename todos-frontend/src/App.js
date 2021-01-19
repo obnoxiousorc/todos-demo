@@ -1,10 +1,20 @@
 import './App.css';
-import TodosList from './components/TodosList';
-import { Button, Container, Grid, Typography } from '@material-ui/core';
+import {
+  Button,
+  Container,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Typography,
+} from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import useAxios from './hooks/useAxios';
 import { Add } from '@material-ui/icons';
 import TodoDialog from './components/TodoDialog';
+import Todo from './components/Todo';
 
 function App() {
   const [dataVersion, setDataVersion] = useState(0);
@@ -27,7 +37,26 @@ function App() {
             <Typography variant="h4">Todos</Typography>
           </Grid>
           <Grid item>
-            {!loading && data ? <TodosList todos={data}></TodosList> : null}
+            <Paper>
+              <List>
+                {!data || data.length === 0 ? (
+                  <ListItem>
+                    <ListItemText>No todos yet!</ListItemText>
+                  </ListItem>
+                ) : (
+                  data.map((todo, i) => (
+                    <>
+                      <Todo
+                        key={i}
+                        name={todo.name}
+                        completed={todo.completed}
+                      />
+                      {i < data.length - 1 ? <Divider /> : null}
+                    </>
+                  ))
+                )}
+              </List>
+            </Paper>
           </Grid>
           <Grid item>
             <Button
