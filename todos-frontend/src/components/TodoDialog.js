@@ -10,8 +10,8 @@ import { useState } from 'react';
 
 import useAxios from '../hooks/useAxios';
 
-function TodoDialog({ open, onClose, id }) {
-  const [name, setName] = useState('');
+function TodoDialog({ open, onClose, todo }) {
+  const [name, setName] = useState(todo ? todo.name : '');
   const [error, setError] = useState('');
   const [axiosProps, setAxiosProps] = useState({});
   const { loading, axiosError } = useAxios(axiosProps, {
@@ -24,7 +24,7 @@ function TodoDialog({ open, onClose, id }) {
 
   return (
     <Dialog open={open} disableBackdropClick>
-      <DialogTitle>{id ? 'Edit' : 'Add'} Todo</DialogTitle>
+      <DialogTitle>{todo ? 'Edit' : 'Add'} Todo</DialogTitle>
       <DialogContent>
         <TextField
           label="Task"
@@ -54,10 +54,10 @@ function TodoDialog({ open, onClose, id }) {
 
             setAxiosProps({
               method: 'post',
-              url: id ? `todo/${id}/edit` : 'todo/new',
+              url: todo ? `todo/${todo.id}/edit` : 'todo/new',
               data: {
                 name,
-                completed: id ? undefined : false,
+                completed: todo ? undefined : false,
               },
             });
           }}

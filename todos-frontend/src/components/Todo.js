@@ -10,10 +10,12 @@ import {
 import { MoreVert } from '@material-ui/icons';
 import { useState } from 'react';
 import useAxios from '../hooks/useAxios';
+import TodoDialog from './TodoDialog';
 
 function Todo({ todo, refresh }) {
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [axiosProps, setAxiosProps] = useState({});
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
   const { loading, axiosError } = useAxios(axiosProps, {
     afterCb: () => {
       setAxiosProps({});
@@ -22,38 +24,55 @@ function Todo({ todo, refresh }) {
   });
 
   return (
-    <ListItem>
-      <ListItemText>{todo.name}</ListItemText>
-      <ListItemSecondaryAction>
-        <Checkbox
-          checked={todo.completed}
-          disabled={loading}
-          onChange={(e) => {
-            setAxiosProps({
-              method: 'post',
-              url: `todo/${todo.id}/edit`,
-              data: {
-                completed: e.target.checked,
-              },
-            });
-          }}
-        />
-        <IconButton
-          size="small"
-          onClick={(e) => setMenuAnchor(e.currentTarget)}
-        >
-          <MoreVert />
-        </IconButton>
-        <Menu
-          anchorEl={menuAnchor}
-          open={!!menuAnchor}
-          onClose={() => setMenuAnchor(null)}
-        >
-          <MenuItem>Edit</MenuItem>
-          <MenuItem>Delete</MenuItem>
-        </Menu>
-      </ListItemSecondaryAction>
-    </ListItem>
+    <>
+      <ListItem>
+        <ListItemText>{todo.name}</ListItemText>
+        <ListItemSecondaryAction>
+          <Checkbox
+            checked={todo.completed}
+            disabled={loading}
+            onChange={(e) => {
+              setAxiosProps({
+                method: 'post',
+                url: `todo/${todo.id}/edit`,
+                data: {
+                  completed: e.target.checked,
+                },
+              });
+            }}
+          />
+          <IconButton
+            size="small"
+            onClick={(e) => setMenuAnchor(e.currentTarget)}
+          >
+            <MoreVert />
+          </IconButton>
+          <Menu
+            anchorEl={menuAnchor}
+            open={!!menuAnchor}
+            onClose={() => setMenuAnchor(null)}
+          >
+            <MenuItem
+              onClick={() => {
+                setMenuAnchor(null);
+                setEditDialogOpen(true);
+              }}
+            >
+              Edit
+            </MenuItem>
+            <MenuItem>Delete</MenuItem>
+          </Menu>
+        </ListItemSecondaryAction>
+      </ListItem>
+      <TodoDialog
+        open={editDialogOpen}
+        todo={todo}
+        onClose={() => {
+          setEditDialogOpen(false);
+          refresh();
+        }}
+      />
+    </>
   );
 }
 

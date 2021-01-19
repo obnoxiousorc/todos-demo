@@ -71,7 +71,6 @@ function App() {
             </Button>
           </Grid>
           <TodoDialog
-            type="new"
             open={newTodoDialogOpen}
             onClose={() => {
               setNewTodoDialogOpen(false);
