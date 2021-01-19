@@ -4,13 +4,35 @@ import {
   ListItemText,
   ListItemSecondaryAction,
 } from '@material-ui/core';
+import { useState } from 'react';
+import useAxios from '../hooks/useAxios';
 
-function Todo({ name, completed }) {
+function Todo({ todo, refresh }) {
+  const [axiosProps, setAxiosProps] = useState({});
+  const { loading, axiosError } = useAxios(axiosProps, {
+    afterCb: () => {
+      setAxiosProps({});
+      refresh();
+    },
+  });
+
   return (
     <ListItem>
-      <ListItemText>{name}</ListItemText>
+      <ListItemText>{todo.name}</ListItemText>
       <ListItemSecondaryAction>
-        <Checkbox checked={completed} />
+        <Checkbox
+          checked={todo.completed}
+          disabled={loading}
+          onChange={(e) => {
+            setAxiosProps({
+              method: 'post',
+              url: `todo/${todo.id}/edit`,
+              data: {
+                completed: e.target.checked,
+              },
+            });
+          }}
+        />
       </ListItemSecondaryAction>
     </ListItem>
   );

@@ -57,7 +57,7 @@ function TodoDialog({ open, onClose, id }) {
               url: id ? `todo/${id}/edit` : 'todo/new',
               data: {
                 name,
-                completed: false,
+                completed: id ? undefined : false,
               },
             });
           }}

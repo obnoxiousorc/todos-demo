@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 // Idea adapted from https://www.bitnative.com/2020/07/06/four-ways-to-fetch-data-in-react/
 function useAxios(props, { successCb, errorCb, afterCb } = {}) {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const prevProps = useRef();
 
@@ -40,6 +40,7 @@ function useAxios(props, { successCb, errorCb, afterCb } = {}) {
           afterCb();
         }
       });
+    setLoading(true);
   }, [props]);
 
   return { data, loading, error };

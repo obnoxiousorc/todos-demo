@@ -17,6 +17,7 @@ import TodoDialog from './components/TodoDialog';
 import Todo from './components/Todo';
 
 function App() {
+  // Used to force an update
   const [dataVersion, setDataVersion] = useState(0);
   const [newTodoDialogOpen, setNewTodoDialogOpen] = useState(false);
   const { data, loading, error } = useAxios({
@@ -48,8 +49,8 @@ function App() {
                     <>
                       <Todo
                         key={i}
-                        name={todo.name}
-                        completed={todo.completed}
+                        todo={todo}
+                        refresh={() => setDataVersion(dataVersion + 1)}
                       />
                       {i < data.length - 1 ? <Divider /> : null}
                     </>
