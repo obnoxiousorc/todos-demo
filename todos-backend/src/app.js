@@ -29,6 +29,18 @@ app.get('/api/todo/:id', async (req, res) => {
   }
 });
 
+app.post('/api/todo/:id/edit', async (req, res) => {
+  let todo = await Todo.findByPk(req.params.id);
+  if (!todo) {
+    res.status(404);
+    res.json({ error: 'No such todo!' });
+  } else {
+    await Todo.update(req.body, { where: { id: req.params.id } });
+    todo = await Todo.findByPk(req.params.id);
+    res.json(todo);
+  }
+});
+
 app.post('/api/todo/new', async (req, res) => {
   console.log(req.body);
   try {
