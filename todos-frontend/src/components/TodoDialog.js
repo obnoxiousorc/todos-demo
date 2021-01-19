@@ -20,8 +20,6 @@ function TodoDialog({ open, onClose, todo }) {
     afterCb: () => setAxiosProps({}),
   });
 
-  console.log(axiosProps);
-
   return (
     <Dialog open={open} disableBackdropClick>
       <DialogTitle>{todo ? 'Edit' : 'Add'} Todo</DialogTitle>

@@ -18,6 +18,7 @@ function Todo({ todo, refresh }) {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const { loading, axiosError } = useAxios(axiosProps, {
     afterCb: () => {
+      setMenuAnchor(null);
       setAxiosProps({});
       refresh();
     },
@@ -60,7 +61,16 @@ function Todo({ todo, refresh }) {
             >
               Edit
             </MenuItem>
-            <MenuItem>Delete</MenuItem>
+            <MenuItem
+              onClick={() => {
+                setAxiosProps({
+                  method: 'delete',
+                  url: `todo/${todo.id}`,
+                });
+              }}
+            >
+              Delete
+            </MenuItem>
           </Menu>
         </ListItemSecondaryAction>
       </ListItem>
