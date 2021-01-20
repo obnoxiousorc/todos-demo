@@ -15,16 +15,19 @@ function TodoDialog({ open, onClose, todo }) {
   const [error, setError] = useState('');
   const [axiosProps, setAxiosProps] = useState({});
   const { loading } = useAxios(axiosProps, {
-    successCb: () => {
-      setName('');
-      onClose();
-    },
+    successCb: () => onClose(),
     errorCb: (e) => setError(e.message),
     afterCb: () => setAxiosProps({}),
   });
 
   return (
-    <Dialog open={open} disableBackdropClick>
+    <Dialog
+      open={open}
+      disableBackdropClick
+      onEnter={() => {
+        setName(todo ? todo.name : '');
+      }}
+    >
       <DialogTitle>{todo ? 'Edit' : 'Add'} Todo</DialogTitle>
       <DialogContent>
         <TextField
@@ -40,13 +43,7 @@ function TodoDialog({ open, onClose, todo }) {
         />
       </DialogContent>
       <DialogActions>
-        <Button
-          variant="contained"
-          onClick={() => {
-            setName('');
-            onClose();
-          }}
-        >
+        <Button variant="contained" onClick={() => onClose()}>
           Cancel
         </Button>
         <Button
